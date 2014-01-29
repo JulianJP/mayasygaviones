@@ -198,7 +198,7 @@ function inicializar()
         $(".lupa").css("cursor","pointer").click(dialogoLupa);
         agregarProducto();
     }
-
+/*
     function agregarProducto() 
     {
         $("table").append("<tbody></tbody>");
@@ -223,6 +223,7 @@ function inicializar()
         $(":input:first").focus();
         $("input[type|='text'],input[type|='number']").val("");
     }
+    */
 
     function agregarProductoCotizado() 
     {
