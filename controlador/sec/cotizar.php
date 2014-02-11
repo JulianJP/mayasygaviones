@@ -49,7 +49,7 @@
 		'Cantidad' => $cantidad
 	);
 
-	$db_facturacion->dbAddCotizar($datos);
+	$db_facturacion->dbAddProductoCoti($datos);
 
 	$result = $db_facturacion->dbObtenerDetalleCotizar($consecutivo);
 

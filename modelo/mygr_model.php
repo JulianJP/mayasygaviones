@@ -170,9 +170,20 @@
 		***************************************************************************
 		**************************************************************************/
 
-		function ActualizarConsecutivo($nuevo,$fecha)
+		function ActualizarConsecutivoFacturar($nuevo,$fecha)
 		{
 			$query = "UPDATE factura_consecutivo SET Numero = ".$nuevo.", Fecha = '".date("Y-m-d")."' WHERE Numero = ".($nuevo - 1);
+
+			$result = mysqli_query($this->conectar(),$query);
+
+			return $result;
+
+			mysql_free_result($result);
+		}
+
+		function ActualizarConsecutivoCotizar($nuevo,$fecha)
+		{
+			$query = "UPDATE cotizar_consecutivo SET Numero = ".$nuevo.", Fecha = '".date("Y-m-d")."' WHERE Numero = ".($nuevo - 1);
 
 			$result = mysqli_query($this->conectar(),$query);
 
@@ -270,6 +281,14 @@
 
 		}
 
+		function dbAddProductoCoti($data)
+		{
+			$query = "INSERT INTO cotizar_detalle VALUES (".$data['Num_Cotizar'].", '".$data['Ref']."', ".$data['Cantidad'].")";
+
+			mysqli_query($this->conectar(),$query);
+
+		}
+
 		/**************************************************************************
 		***************************************************************************
 		****************	AGREGAR LOS VALORES MANDADOS DESDE 		***************
@@ -279,7 +298,7 @@
 
 		function dbAddCotizar($data)
 		{
-			$query = "INSERT INTO cotizar_detalle VALUES (".$data['Num_Cotizar'].", '".$data['Ref']."', ".$data['Cantidad'].")";
+			$query = "INSERT INTO cotizar VALUES (".$data['NumCotiza'].", '".$data['FechaCotiza']."', '".$data['HoraCotiza']."', '".$data['Subtotal']."', '".$data['iva']."', '".$data['Descuento']."', '".$data['Total']."', '".$data['IdTercero']."')";
 
 			mysqli_query($this->conectar(),$query);
 

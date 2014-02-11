@@ -23,20 +23,6 @@ function inicializar()
      $('#find').dialog({ autoOpen: false });
 
     /************************************************************************************/
-    /********************       OPCION FACTURAR        **********************************/
-    /************************************************************************************/
-
-    //Variables
-    var facturar;
-    //Inicializar Opciones
-    facturar = $("#Facturar");
-    facturar.click(menuFacturar);
-    //Inicio Activadores
-    activarEventosFacturar();
-    seccionFacturar ();
-    facturar.addClass('active');
-
-    /************************************************************************************/
     /********************       OPCION INVENTARIO      **********************************/
     /************************************************************************************/
 
@@ -46,6 +32,8 @@ function inicializar()
     inventario = $("#Inventario");
     inventario.click(menuInventario);
     //Inicio Activadores
+    seccionInventario();
+    inventario.addClass('active');
     activarEventosInventario();
 
     /************************************************************************************/
@@ -121,20 +109,6 @@ function adicionarFind ()
 //**********************************************************************************
 //**********************************************************************************
 
-function activarEventosFacturar () 
-{
-    //variables
-    var generarFactura;
-    //Asignacion de variables
-    generarFactura  = $("#generarPDF");
-    //Asignacion de Funciones al momento de hacer click
-    generarFactura.click(
-        function () {
-            addTercero();
-            generarReciboPDF();
-         });
-}
-
 function activarEventosInventario () 
 {
       
@@ -165,12 +139,6 @@ function activarEventosReporte ()
 //**********************************************************************************
 //**********************************************************************************
 
-function menuFacturar () 
-{
-    $("a").removeClass('active');
-    $(this).addClass('active');
-    seccionFacturar();
-}
 
 function menuInventario () 
 {
@@ -203,38 +171,6 @@ function menuReporte ()
 //**********************************************************************************
 //**********************************************************************************
 
-function seccionFacturar () 
-{
-    var codigoHTML= "<table border='2px'>"+
-                        "<thead>"+
-                            "<tr>"+
-                              "<th>Ref</th>"+
-                              "<th>Detalle</th>"+
-                              "<th>Cantidad</th>"+
-                              "<th>Valor Unitario</th>"+
-                              "<th>Subtotal</th>"+
-                            "</tr>"+
-                        "</thead>"+
-                        "<tbody></tbody>"+
-                        "<tfoot border='0'>"+
-                            "<form action='../controlador/factura.php' method='post' id='formulario_facturar'>"+
-                                "<td><input type='text' name = 'ref'><img src='../multimedia/img/lupa.png' width='20px' height='20px' class='lupa'></td>"+
-                                "<td colspan='2'>Cantidad<input type='number' name='cantidad' min='0' max='1000' value='0'></td>"+
-                                "<td><input type='submit' value='Agregar' id='addProducto'></td>"+
-                                "<td><button id='generarPDF'>Generar Recibo</button></td>"+
-                            "</form>"+
-                        "</tfoot>"+
-                    "</table>";
-    $(".contenedor").html(codigoHTML);
-    $(".lupa").css("cursor","pointer").click(dialogoLupa);
-    activarEventosFacturar();
-    $("#formulario_facturar").submit(function(event) {
-        event.preventDefault();
-        actualizarCantidad();
-        addProducto_BD();
-    });
-    addProducto_BD();
-}
 
 function seccionInventario () 
 {
@@ -365,7 +301,7 @@ function actualizarCantidad ()
 
 function addTercero ()
 {
-
+    
 }
 
 //**********************************************************************************
@@ -403,3 +339,4 @@ function cargando ()
     $("tbody").append( "<td colspan='5' id='cargando' align='center'><img src='../multimedia/img/load.gif' /></td>" );
     $("#cargando").css("border","0");
 }
+

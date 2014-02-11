@@ -31,7 +31,7 @@
 		    $this->SetFillColor(122, 122, 122);
 		    $this->SetTextColor(255, 204, 51);
 		    $this->Cell(5);
-		    $this->Cell(49,5,'Factura de Venta No. '.$this->valoresAdd[0],1,2,'L',true);
+		    $this->Cell(49,5,'Cotizacion Numero: '.$this->valoresAdd[0],1,2,'L',true);
 		    $this->Cell(49,2,'',0,1);
 		    //Nit de la empresa
 		    $this->SetTextColor(0, 0, 0);
@@ -98,7 +98,7 @@
 	****************************************************************************
 	***************************************************************************/
 
-	$ConsultaConsecutivo = $facturar->obtenerDesde('Numero','factura_consecutivo');
+	$ConsultaConsecutivo = $facturar->obtenerDesde('Numero','cotizar_consecutivo');
 	$ResultConsecutivo = mysqli_fetch_array($ConsultaConsecutivo);
 	$NewConsecutivo = ($ResultConsecutivo['Numero'] + 1);
 
@@ -165,7 +165,7 @@
 	$mipdf -> SetTextColor( 0 , 0 , 0);
 
 	//cargamos los datos de la factura
-	$consulta = $facturar->dbObtenerDetalle($NewConsecutivo);
+	$consulta = $facturar->dbObtenerDetalleCotizar($NewConsecutivo);
 
 	$subtotalFactura = 0;
 	while ($datos = mysqli_fetch_array($consulta) )
@@ -270,17 +270,17 @@
 	$mipdf -> Cell(50,5,'','0RB',1);
 
 	$DataFacturaTotal = array(
-		'NumFactura' 	=> $NewConsecutivo, 
-		'FechaFactura'	=> $fecha,
-		'HoraFactura'	=> $hora,
+		'NumCotiza' 	=> $NewConsecutivo, 
+		'FechaCotiza'	=> $fecha,
+		'HoraCotiza'	=> $hora,
 		'Subtotal'		=> $subtotalFactura,
 		'iva'			=> 0,
 		'Descuento'		=> 0,
 		'Total'			=> $subtotalFactura,
 		'IdTercero'		=> '1128904058'
 	);
-	$facturar -> ActualizarConsecutivoFacturar($NewConsecutivo,$fecha);
-	$facturar -> dbAddFactura($DataFacturaTotal);	 
+	$facturar -> ActualizarConsecutivoCotizar($NewConsecutivo,$fecha);
+	$facturar -> dbAddCotizar($DataFacturaTotal);	 
 
 	$mipdf -> Output();
 ?>
